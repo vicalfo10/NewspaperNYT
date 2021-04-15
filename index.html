@@ -4,23 +4,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Periodico NYT</title>
+    <title>Newspaper NYT</title>
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
 
 </head>
 <body>
-    
-    <h3>Ingrese el mes y año de noticias:</h3>
+    <div class="card text-center">
+        <div class="card-header">
+            New York Times
+        </div>
+        <div class="card-body">
+            <h1 class="card-title">Newspaper</h1>
+            <p>Enter the month and year of news</p>
 
-    <input type="text" placeholder="Mes" id="mes" value="12">
-    <input type="text" placeholder="Año" id="ano" value="2020">
-
-    <br>
-
-    <button id="consulta">Consulta</button>
-
-    <hr>
+            <input type="text" placeholder="Month" id="mes" value="12">
+            <input type="text" placeholder="Year" id="ano" value="2020">
+            
+            <button type="button" class="btn btn-primary" id="consulta">Search</button>
+        </div>
+        <div class="card-footer text-muted">
+            Pending
+        </div>
+    </div>
 
     <h1 id="headline"></h1>
     <h2 id="abstract"></h2>
