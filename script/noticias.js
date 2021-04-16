@@ -6,10 +6,11 @@
 })*/
 
 var consulta = document.getElementById('consulta')
-var headline = document.getElementById('headline')
-var abstract = document.getElementById('abstract')
-var byline_original = document.getElementById('byline_original')
-var lead_paragraph = document.getElementById('lead_paragraph')
+var head = document.getElementById('head')
+var img = document.getElementById('img')
+
+var mynews = []
+var indice
 
 consulta.addEventListener('click', function(){
 
@@ -19,28 +20,38 @@ consulta.addEventListener('click', function(){
     let url = 'https://api.nytimes.com/svc/archive/v1/' + year + '/' + month + '.json?api-key=' + key
     let multimedia = "https://static01.nyt.com/"
 
-    let paragraph = document.createElement('p')
-    let imagen = document.createElement('img')
-
     if(month != "Select a Month" && year != "Select a Year"){
         getnews()
          .then(data => data.json())
         .then(docs => {
                 
-            console.log(docs.response.docs.length)
-            console.log(docs.response.docs[2].lead_paragraph)
-            console.log(docs.response.docs[2])
-    
-            headline.innerHTML = docs.response.docs[2].headline.main
-            abstract.innerHTML = docs.response.docs[2].abstract
-            byline_original.innerHTML = docs.response.docs[2].byline.original
+            //console.log(docs.response.docs.length)
+            //console.log(docs.response.docs[3].lead_paragraph)
+            //console.log(docs.response.docs[3])
+            
+            for(var i = 0; i <= 5; i ++){
+                mynews.push({
+                                "headline"        : docs.response.docs[i].headline.main,
+                                "abstract"        : docs.response.docs[i].abstract,
+                                "byline_original" : docs.response.docs[i].byline.original,
+                                "imagen"          : multimedia + docs.response.docs[i].multimedia[0].url,
+                                "paragraph"       : docs.response.docs[i].lead_paragraph
+                })
+            }
+            
+            for(indice in mynews){
+                var headline = document.createElement('h1')
+                var imagen = document.createElement('img')
+                var paragraph = document.createElement('p')
                 
-            imagen.src = multimedia + docs.response.docs[2].multimedia[0].url
-            paragraph.innerHTML = docs.response.docs[2].lead_paragraph
-                
-            lead_paragraph.appendChild(imagen)
-            lead_paragraph.appendChild(paragraph)
-                
+                headline.append(mynews[indice].headline)
+                imagen.src = mynews[indice].imagen
+                paragraph.append(mynews[indice].paragraph)
+      
+                head.append(headline)
+                img.append(imagen)
+                head.append(paragraph)
+            }
         })
     
         function getnews(){
