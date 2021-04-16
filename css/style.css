@@ -1,12 +1,15 @@
-.caja {
-    margin:0px auto 20px auto;	
-    border:1px solid #d9d9d9;
-    height:30px;
-    overflow: hidden;
-    width: 150px;
-    position:relative;
+img.new_img {
+    width: 370px;
+    height: 370px;
+    margin: 50px auto 20px auto;
  }
- select {
+
+img.head_img{
+    width: 30px;
+    height: 25px;
+}
+
+select {
     background: transparent;
     border: none;
     font-size: 14px;
@@ -17,7 +20,16 @@
  }
  select:focus{ outline: none;}
  
- .caja::after{
+ .box {
+    margin:0px auto 20px auto;	
+    border:1px solid #d9d9d9;
+    height:30px;
+    overflow: hidden;
+    width: 180px;
+    position:relative;
+ }
+
+ .box::after{
      content:"\025be";
      display:table-cell;
      padding-top:7px;

@@ -33,19 +33,24 @@ for(indice in mynews){
 })*/
 
 var fecha = new Date()
-var consulta = document.getElementById('consulta')
+var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+var search = document.getElementById('search')
 var date = document.getElementById('date')
-var head = document.getElementById('head')
-var img = document.getElementById('img')
+var container = document.getElementById('container')
+var spinner = document.getElementById('spinner')
 
-date.innerHTML = "Today is: " + fecha.getDate() + " / " + fecha.getMonth() + " / " + fecha.getFullYear()
+//var head = document.getElementById('head')
+//var img = document.getElementById('img')
 
-consulta.addEventListener('click', function(){
+date.innerHTML = "Today is: " + fecha.getDate() + " / " + months[fecha.getMonth()] + " / " + fecha.getFullYear()
+
+search.addEventListener('click', function(){
 
     let month = document.getElementById('month').value
     let year = document.getElementById('year').value
     let key = 'n7YKG0MPOmRl8ESF86N0V6VXLSUubtdo'
-    let url = 'https://api.nytimes.com/svc/archive/v1/' + year + '/' + month + '.json?api-key=' + key
+    let url_news = 'https://api.nytimes.com/svc/archive/v1/' + year + '/' + month + '.json?api-key=' + key
     let multimedia = "https://static01.nyt.com/"
 
     if(month != "Select a Month" && year != "Select a Year"){
@@ -55,27 +60,29 @@ consulta.addEventListener('click', function(){
                 
             //console.log(docs.response.docs.length)
             //console.log(docs.response.docs[3].lead_paragraph)
-            //console.log(docs.response.docs[3])
+            console.log(docs)
             
-            for(var i = 0; i <= 5; i ++){
-
-                var headline = document.createElement('h1')
-                var imagen = document.createElement('img')
-                var paragraph = document.createElement('p')
-
-                headline.append(docs.response.docs[i].headline.main)
-                imagen.src = multimedia + docs.response.docs[i].multimedia[0].url
-                paragraph.append(docs.response.docs[i].lead_paragraph)
-
-                head.append(headline)
-                img.append(imagen)
-                head.append(paragraph)
+            for(var i = 0; i <= 250; i ++){
+                container.innerHTML += `<div class="row">
+                                            <div class="col-sm-9">
+                                                <div class="row">
+                                                    <div class="col-12 col-sm-9">
+                                                        <h1>${docs.response.docs[i].headline.main}</h1>
+                                                        <p>${docs.response.docs[i].lead_paragraph}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <img class="new_img" src="${multimedia + docs.response.docs[i].multimedia[0].url}" class="rounded float-end" alt="...">
+                                            </div>
+                                            <br>
+                                        </div>`
 
             }
         })
     
         function getnews(){
-            return fetch(url)
+            return fetch(url_news)
         }
     }else{
          swal({

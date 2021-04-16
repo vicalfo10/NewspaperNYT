@@ -14,12 +14,13 @@
     <div class="card text-center">
         <div class="card-header">
             New York Times
+            <img class="head_img" src="img/head_nyt.png">
         </div>
         <div class="card-body">
             <h1 class="card-title">Newspaper</h1>
             <p>Enter the month and year of news</p>
 
-            <div class="caja">
+            <div class="box">
                 <select name="month" id="month">
                     <option selected>Select a Month</option>
                     <option value="1">1</option>
@@ -36,7 +37,7 @@
                     <option value="12">12</option>
                 </select>
             </div>
-            <div class="caja">
+            <div class="box">
                 <select name="year" id="year">
                     <option selected>Select a Year</option>
                     <option value="2019">2019</option>
@@ -45,24 +46,23 @@
                 </select>
             </div>
             
-            <button type="button" class="btn btn-primary" id="consulta">Search</button>
+            <button type="button" class="btn btn-primary" id="search">Search</button>
         </div>
-        <div class="card-footer text-muted" id="date">
-            
-        </div>
+        <div class="card-footer text-muted" id="date"></div>
     </div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6" id="head"></div>
-            <div class="col-sm-6" id="img"></div>
-        </div>
+    <div class="container" id="container">
+          <!--<div class="text-center">
+            <div class="spinner-border text-primary" role="status" hidden="true" id="spinner">
+            </div>
+          </div>-->
     </div>
 
     <script src="src/jquery-3.3.1.min.js"></script>
     <script src="src/popper.min.js"></script>
     <script src="src/bootstrap.min.js"></script>
     <script src="src/sweetalert.min.js"></script>
-    <script src="script/noticias.js"></script>    
+    <script src="script/noticias.js"></script>
+
 </body>
 </html>
