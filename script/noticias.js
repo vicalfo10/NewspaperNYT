@@ -51,23 +51,25 @@ search.addEventListener('click', function(){
     let month = document.getElementById('month').value
     let year = document.getElementById('year').value
     let key = 'n7YKG0MPOmRl8ESF86N0V6VXLSUubtdo'
-    let url_news = 'https://api.nytimes.com/svc/archive/v1/' + year + '/' + month + '.json?api-key=' + key
+    //let url_news = 'https://api.nytimes.com/svc/archive/v2/' + year + '/' + month + '.json?api-key=' + key
+    let url_news = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=' + key
     let multimedia = "https://static01.nyt.com/"
 
     if(month != "Select a Month" && year != "Select a Year"){
         getnews()
-         .then(data => data.json())
+        .then(data => data.json())
         .then(docs => {
                 
             //console.log(docs.response.docs.length)
             //console.log(docs.response.docs[1].lead_paragraph)
-            //console.log(docs.response.docs[1])
+            //console.log(docs)
+            //console.log(docs.response.docs[10].multimedia.length)
             
-            for(var i = 0; i <= 100; i ++){
+            for(var i = 0; i <= 9; i ++){
                 if(docs.response.docs[i].multimedia.length == 0){
                     img_news = 'img/news_failed.jpg'
                 }else{
-                    img_news = multimedia + docs.response.docs[i].multimedia[0].url     
+                    img_news = multimedia + docs.response.docs[i].multimedia[0].url      
                 }
                 
                 container.innerHTML += `<div class="row">
@@ -91,9 +93,28 @@ search.addEventListener('click', function(){
                 
             }
         })
+        .catch(function(error) {
+            swal({
+                title: "Sorry",
+                text: "Problems returning the news " + error,
+                icon: "error"
+             })       
+        })
     
-        function getnews(){
-            return fetch(url_news)
+        async function getnews(){
+            /*let request = await fetch(url_news, {
+                            method: 'GET',
+                            mode: 'no-cors',
+                            cache: 'no-cache',
+                            headers: {
+                                'Content-Type' : 'application/json',
+                                'Content-Type': 'multipart/form-data',
+                                'Access-Control-Allow-Origin': '*',
+                                'Access-Control-Allow-Header': '*'
+                            }   
+            })
+            console.log(request)*/
+            return await fetch(url_news)
         }
     }else{
          swal({
