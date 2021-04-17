@@ -39,7 +39,7 @@ var search = document.getElementById('search')
 var date = document.getElementById('date')
 var container = document.getElementById('container')
 var spinner = document.getElementById('spinner')
-
+var img_news = ''
 //var head = document.getElementById('head')
 //var img = document.getElementById('img')
 
@@ -47,6 +47,7 @@ date.innerHTML = "Today is: " + fecha.getDate() + " / " + months[fecha.getMonth(
 
 search.addEventListener('click', function(){
 
+    container.innerHTML = ''
     let month = document.getElementById('month').value
     let year = document.getElementById('year').value
     let key = 'n7YKG0MPOmRl8ESF86N0V6VXLSUubtdo'
@@ -59,25 +60,35 @@ search.addEventListener('click', function(){
         .then(docs => {
                 
             //console.log(docs.response.docs.length)
-            //console.log(docs.response.docs[3].lead_paragraph)
-            console.log(docs)
+            //console.log(docs.response.docs[1].lead_paragraph)
+            //console.log(docs.response.docs[1])
             
-            for(var i = 0; i <= 250; i ++){
+            for(var i = 0; i <= 100; i ++){
+                if(docs.response.docs[i].multimedia.length == 0){
+                    img_news = 'img/news_failed.jpg'
+                }else{
+                    img_news = multimedia + docs.response.docs[i].multimedia[0].url     
+                }
+                
                 container.innerHTML += `<div class="row">
-                                            <div class="col-sm-9">
+                                            <div class="col-sm-8">
                                                 <div class="row">
-                                                    <div class="col-12 col-sm-9">
-                                                        <h1>${docs.response.docs[i].headline.main}</h1>
+                                                    <div class="col-12 col-sm-12">
+                                                        <h1>${i+1 + " - " + docs.response.docs[i].headline.main}</h1>
+                                                        <p>${docs.response.docs[i].abstract}</p>
+                                                        <br>
+                                                        <h5>${docs.response.docs[i].byline.original}</h5>
                                                         <p>${docs.response.docs[i].lead_paragraph}</p>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-sm-3">
-                                                <img class="new_img" src="${multimedia + docs.response.docs[i].multimedia[0].url}" class="rounded float-end" alt="...">
+                                                <img class="new_img" src="${img_news}" class="rounded float-end" alt="...">
                                             </div>
                                             <br>
-                                        </div>`
-
+                                        </div>
+                                        <hr class="hr">`
+                
             }
         })
     

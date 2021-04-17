@@ -1,7 +1,7 @@
 img.new_img {
-    width: 370px;
-    height: 370px;
-    margin: 50px auto 20px auto;
+    width: 352px;
+    height: 352px;
+    margin: 5px auto 5px auto;
  }
 
 img.head_img{
@@ -20,6 +20,10 @@ select {
  }
  select:focus{ outline: none;}
  
+hr.hr {
+    border-top: 18px solid rgb(219, 217, 217)
+}
+
  .box {
     margin:0px auto 20px auto;	
     border:1px solid #d9d9d9;
