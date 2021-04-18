@@ -32,27 +32,39 @@ for(indice in mynews){
     console.log(data)
 })*/
 
-var fecha = new Date()
+var date_today = new Date()
 var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+var day = date_today.getDate()
+var month = date_today.getMonth() + 1
+var year = date_today.getFullYear()
 
 var search = document.getElementById('search')
+var start_date = document.getElementById('start_date')
+var end_date = document.getElementById('end_date')
 var date = document.getElementById('date')
 var container = document.getElementById('container')
-var spinner = document.getElementById('spinner')
 var img_news = ''
-//var head = document.getElementById('head')
-//var img = document.getElementById('img')
 
-date.innerHTML = "Today is: " + fecha.getDate() + " / " + months[fecha.getMonth()] + " / " + fecha.getFullYear()
+
+start_date.value = year + "-" + (month ? '0' + month : month) + "-" + day
+end_date.value = year + "-" + (month ? '0' + month : month) + "-" + day
+date.innerHTML = "Today is: " + day + " / " + months[month - 1] + " / " + year
 
 search.addEventListener('click', function(){
 
+    let dt_start = new Date(start_date.value)
+    let dt_end = new Date(end_date.value)
+    let st_day = dt_start.getDate() + 1
+    let en_day = dt_end.getDate() + 1
+    let st_month = dt_start.getMonth() + 1
+    let en_month = dt_end.getMonth() + 1
+    let st_year = dt_start.getFullYear()
+    let en_year = dt_end.getFullYear()
+
     container.innerHTML = ''
-    let month = document.getElementById('month').value
-    let year = document.getElementById('year').value
     let key = 'n7YKG0MPOmRl8ESF86N0V6VXLSUubtdo'
     //let url_news = 'https://api.nytimes.com/svc/archive/v2/' + year + '/' + month + '.json?api-key=' + key
-    let url_news = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=' + key
+    let url_news = `https://api.nytimes.com/svc/search/v2/articlesearch.json?begin_date=${st_year}${(st_month ? '0' + st_month : st_month)}${st_day}&end_date=${en_year}${(en_month ? '0' + en_month : en_month)}${en_day}&api-key=` + key
     let multimedia = "https://static01.nyt.com/"
 
     if(month != "Select a Month" && year != "Select a Year"){
@@ -61,17 +73,18 @@ search.addEventListener('click', function(){
         .then(docs => {
                 
             //console.log(docs.response.docs.length)
-            //console.log(docs.response.docs[1].lead_paragraph)
-            //console.log(docs)
+            //console.log(docs.response.docs[0].pub_date)
+            console.log(docs.response.docs[0])
             //console.log(docs.response.docs[10].multimedia.length)
             
-            for(var i = 0; i <= 9; i ++){
+            for(var i = 0; i < docs.response.docs.length; i ++){
                 if(docs.response.docs[i].multimedia.length == 0){
                     img_news = 'img/news_failed.jpg'
                 }else{
                     img_news = multimedia + docs.response.docs[i].multimedia[0].url      
                 }
                 
+                let pub_date = new Date(docs.response.docs[i].pub_date)
                 container.innerHTML += `<div class="row">
                                             <div class="col-sm-8">
                                                 <div class="row">
@@ -80,6 +93,7 @@ search.addEventListener('click', function(){
                                                         <p>${docs.response.docs[i].abstract}</p>
                                                         <br>
                                                         <h5>${docs.response.docs[i].byline.original}</h5>
+                                                        <p>${months[pub_date.getMonth()] + " " + (pub_date.getDate()) + ", " + pub_date.getFullYear()}</p>
                                                         <p>${docs.response.docs[i].lead_paragraph}</p>
                                                     </div>
                                                 </div>

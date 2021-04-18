@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-
+    
 </head>
 <body>
     <div class="card text-center">
@@ -18,32 +18,15 @@
         </div>
         <div class="card-body">
             <h1 class="card-title">Newspaper</h1>
-            <p>Enter the month and year of news</p>
+            
+            Enter a date range to display the articles.
 
-            <div class="box">
-                <select name="month" id="month">
-                    <option selected>Select a Month</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                </select>
+            <div class="card-body">
+                <input type="date" id="start_date" value="">
             </div>
-            <div class="box">
-                <select name="year" id="year">
-                    <option selected>Select a Year</option>
-                    <option value="2019">2019</option>
-                    <option value="2020">2020</option>
-                    <option value="2021">2021</option>
-                </select>
+
+            <div class="card-body">
+                <input type="date" id="end_date" value="">
             </div>
             
             <button type="button" class="btn btn-primary" id="search">Search</button>
