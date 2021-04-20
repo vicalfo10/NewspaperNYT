@@ -46,7 +46,25 @@ try {
     var container = document.getElementById('container')
     var img_news = ''
 
+    var key = '&api-key=n7YKG0MPOmRl8ESF86N0V6VXLSUubtdo'
+    var url_list = `https://api.nytimes.com/svc/news/v3/content/section-list.json?${key}`
+    var url_news = `https://api.nytimes.com/svc/search/v2/articlesearch.json?`
+    var multimedia = "https://static01.nyt.com/"
 
+    section_list()
+        .then(data => data.json())
+        .then(list => {
+            for(var l = 0; l < list.results.length; l ++){
+                news_desk.innerHTML += `<option value="${list.results[l].display_name}">${list.results[l].display_name}</option>`
+            }
+        }).catch(function(error) {
+            swal({
+                title: "Sorry",
+                text: "Problems displaying the list, only everyone filter can be used. " + error,
+                icon: "error"
+                })       
+        })        
+    
     start_date.value = year + "-" + (month ? '0' + month : month) + "-" + day
     end_date.value = year + "-" + (month ? '0' + month : month) + "-" + day
     date.innerHTML = "Today is: " + day + " / " + months[month - 1] + " / " + year
@@ -62,10 +80,7 @@ try {
         let st_year = dt_start.getFullYear()
         let en_year = dt_end.getFullYear()
         //let url_news = 'https://api.nytimes.com/svc/archive/v2/' + year + '/' + month + '.json?api-key=' + key
-        let key = '&api-key=n7YKG0MPOmRl8ESF86N0V6VXLSUubtdo'
         let begin_end_date = `begin_date=${st_year}${(st_month ? '0' + st_month : st_month)}${st_day}&end_date=${en_year}${(en_month ? '0' + en_month : en_month)}${en_day}`
-        let url_news = `https://api.nytimes.com/svc/search/v2/articlesearch.json?`
-        let multimedia = "https://static01.nyt.com/"
 
         container.innerHTML = ''
 
@@ -73,7 +88,6 @@ try {
             url_news += begin_end_date + key
         }else{
             let fq = `fq=news_desk:("${news_desk.value}")`
-
             url_news += fq + "&" + begin_end_date +  key
         }
 
@@ -81,9 +95,9 @@ try {
         .then(data => data.json())
         .then(docs => {
                     
-            console.log(url_news)
+            //console.log(url_news)
             //console.log(docs.response.docs[0].pub_date)
-            console.log(docs.response.docs[4])
+            //console.log(docs.response.docs[4])
             //console.log(docs.response.docs[10].multimedia.length)
 
             if(docs.response.docs.length > 0){
@@ -147,6 +161,11 @@ try {
                 return await fetch(url_news)
         }
 })
+
+async function section_list(){
+    return await fetch(url_list)
+}
+
 } catch (error) {
     swal({
         title: "Sorry",
