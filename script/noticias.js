@@ -32,11 +32,11 @@ for(indice in mynews){
     console.log(data)
 })*/
 try {
-    var date_today = new Date()
-    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-    var day = date_today.getDate()
-    var month = date_today.getMonth() + 1
-    var year = date_today.getFullYear()
+    const date_today = new Date()
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    const day = date_today.getDate()
+    const month = date_today.getMonth() + 1
+    const year = date_today.getFullYear()
 
     var search = document.getElementById('search')
     var start_date = document.getElementById('start_date')
@@ -49,25 +49,26 @@ try {
     var key = '&api-key=n7YKG0MPOmRl8ESF86N0V6VXLSUubtdo'
     var url_list = `https://api.nytimes.com/svc/news/v3/content/section-list.json?${key}`
 
+
     section_list()
         .then(data => data.json())
         .then(list => {
             for(var l = 0; l < list.results.length; l ++){
                 news_desk.innerHTML += `<option value="${list.results[l].display_name}">${list.results[l].display_name}</option>`
             }
-        }).catch(function(error) {
+        }).catch((error) => {
             swal({
                 title: "Sorry",
                 text: "Problems displaying the list, only everyone filter can be used. " + error,
                 icon: "error"
-                })       
-        })        
+                })  
+        })
     
     start_date.value = year + "-" + (month ? '0' + month : month) + "-" + day
     end_date.value = year + "-" + (month ? '0' + month : month) + "-" + day
     date.innerHTML = "Today is: " + day + " / " + months[month - 1] + " / " + year
 
-    search.addEventListener('click', function(){
+    search.addEventListener('click', () => {
 
         let dt_start = new Date(start_date.value)
         let dt_end = new Date(end_date.value)
@@ -78,7 +79,7 @@ try {
         let st_year = dt_start.getFullYear()
         let en_year = dt_end.getFullYear()
         let url_news = `https://api.nytimes.com/svc/search/v2/articlesearch.json?`
-        let multimedia = "https://static01.nyt.com/"
+        const multimedia = "https://static01.nyt.com/"
         let begin_end_date = `begin_date=${st_year}${(st_month ? '0' + st_month : st_month)}${st_day}&end_date=${en_year}${(en_month ? '0' + en_month : en_month)}${en_day}`
 
         container.innerHTML = ''
@@ -94,7 +95,7 @@ try {
         .then(data => data.json())
         .then(docs => {
                     
-            console.log(url_news)
+            //console.log(url_news)
             //console.log(docs.response.docs[0].pub_date)
             //console.log(docs.response.docs[4])
             //console.log(docs.response.docs[10].multimedia.length)
@@ -137,7 +138,7 @@ try {
                 })
             }
         })
-        .catch(function(error) {
+        .catch((error) => {
             swal({
                 title: "Sorry",
                 text: "Problems returning the news. " + error,
@@ -157,7 +158,7 @@ try {
                                 'Access-Control-Allow-Header': '*'
                             }   
             })*/
-                return await fetch(url_news)
+            return await fetch(url_news)
         }
 })
 
